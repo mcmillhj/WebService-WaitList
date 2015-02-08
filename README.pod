@@ -1,0 +1,11 @@
+=head1 NAME 
+
+waitlist
+
+=head1 VERSION
+
+0.01
+
+=head1 DESCRIPTION
+
+A backend for an application that shows restaurants near you (within X miles) and their respective wait times if you wanted to eat *right now*.
