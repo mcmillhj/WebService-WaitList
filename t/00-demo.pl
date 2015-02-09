@@ -6,7 +6,7 @@ use warnings;
 use feature qw(say);
 use Webservice::WaitList;
 
-my $app = Webservice::WaitList->new;
+my $app = Webservice::WaitList->new( search_radius => 5 );
 my $charlottesville = '38.034667,-78.481145';
 foreach my $restaurant ( $app->restaurants_near_me($charlottesville) ) {
    say $restaurant;

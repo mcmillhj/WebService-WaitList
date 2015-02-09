@@ -5,12 +5,13 @@ use namespace::clean;
 use Types::Standard qw(Int);
 use WWW::Google::Places;
 
-my $GOOGLE_API_KEY = $ENV{GOOGLE_API_KEY};
+my $GOOGLE_API_KEY  = $ENV{GOOGLE_API_KEY};
+my $METERS_PER_MILE = 1609;
 
 has 'search_radius' => (
    is      => 'rw',
    isa     => Int,
-   default => 1609,
+   default => sub { 1 * $METERS_PER_MILE },
 );
 
 has 'places_service' => (
@@ -19,6 +20,15 @@ has 'places_service' => (
       return WWW::Google::Places->new( api_key => $GOOGLE_API_KEY );
    },
 );
+
+around BUILDARGS => sub {
+   my ($orig, $self, %args) = @_;
+
+   $args{search_radius} *= $METERS_PER_MILE
+      if exists $args{search_radius};
+     
+   return $self->$orig(%args);
+};
 
 sub restaurants_near_me {
    my ($self, $location) = @_;
